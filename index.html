@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundscape</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- WELCOME -->
+<div id="welcome-screen">
+    <div class="welcome-card">
+        <h1>🌿 Soundscape</h1>
+        <p>Relax. Mix. Listen.</p>
+        <button id="start-button">▶ Start Listening</button>
+    </div>
+</div>
+
+<!-- APP -->
+<main id="app" class="hidden">
+
+    <header>
+        <h1>🌿 Soundscape</h1>
+
+        <div id="soundscape-selector">
+            <button class="soundscape active" data-scape="mornings">🌅 Mornings</button>
+            <button class="soundscape" data-scape="moonrise">🌙 Moonrise</button>
+            <button class="soundscape" data-scape="swamp">🌿 Swamp</button>
+        </div>
+
+        <!-- 🎛️ CONTROLS -->
+        <div id="controls">
+            <button id="reset-btn">🔄 Reset</button>
+            <button id="mute-btn">🔇 Mute</button>
+        </div>
+
+    </header>
+
+    <!-- SOUND BUTTONS -->
+    <section id="sound-container"></section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
