@@ -51,13 +51,24 @@ const resetBtn = document.getElementById("reset-btn");
 const muteBtn = document.getElementById("mute-btn");
 
 /* =========================
-   START
+   START (SMOOTH FADE)
 ========================= */
 startBtn.onclick = () => {
-    welcome.classList.add("hidden");
-    app.classList.remove("hidden");
+
     started = true;
-    loadScape();
+
+    app.classList.remove("hidden");
+
+    // Trigger CSS transition
+    requestAnimationFrame(() => {
+        app.classList.add("show");
+        welcome.classList.add("hidden");
+    });
+
+    // Wait for the fade before starting audio
+    setTimeout(() => {
+        loadScape();
+    }, 300);
 };
 
 /* =========================
@@ -65,7 +76,6 @@ startBtn.onclick = () => {
 ========================= */
 function destroyCurrentAudio() {
 
-    // stop ambient
     if (ambientAudio) {
         ambientAudio.pause();
         ambientAudio.currentTime = 0;
@@ -73,7 +83,6 @@ function destroyCurrentAudio() {
         ambientAudio = null;
     }
 
-    // stop all layered sounds
     Object.values(audioMap).forEach(obj => {
         obj.audio.pause();
         obj.audio.currentTime = 0;
@@ -89,7 +98,7 @@ function destroyCurrentAudio() {
 ========================= */
 function loadScape() {
 
-    destroyCurrentAudio(); // 🔥 CLEAN OLD WORLD FIRST
+    destroyCurrentAudio();
 
     const scape = soundscapes[currentScape];
 
@@ -145,7 +154,11 @@ function buildUI() {
             const audio = new Audio(`${scape.folder}/${sound}`);
             audio.loop = true;
 
-            audioMap[sound] = { audio, active: false, button: btn };
+            audioMap[sound] = {
+                audio,
+                active: false,
+                button: btn
+            };
 
             btn.onclick = () => {
 
@@ -156,7 +169,7 @@ function buildUI() {
                     item.active = true;
                     btn.classList.add("active");
 
-                    restartAllActive(); // 🔥 sync reset for ALL
+                    restartAllActive();
 
                 } else {
 
@@ -225,6 +238,8 @@ document.querySelectorAll(".soundscape").forEach(btn => {
 
         currentScape = btn.dataset.scape;
 
-        if (started) loadScape();
+        if (started) {
+            loadScape();
+        }
     };
 });
